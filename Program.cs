@@ -10,15 +10,18 @@ namespace CentralTelefonica
     {
         static void Main(string[] args)
         {
-            try
-            {
-           MenuPrincipal menu = new MenuPrincipal();
+            /*
+            MenuPrincipal menu = new MenuPrincipal();
            menu.MostrarMenu();
-            }
-            catch(OpcionMenuException e)
-            {
-                Console.WriteLine (e.Message);
-            }
+             */
+             DateTime fecha = DateTime.Now;
+           
+           Console.WriteLine ($"Dia: {fecha.DayOfWeek}");
+           Console.WriteLine (fecha.Hour);
+           Console.WriteLine (fecha.Minute);
+           Console.WriteLine (fecha.Millisecond/1000);
+
+           
         }
     }
 }
