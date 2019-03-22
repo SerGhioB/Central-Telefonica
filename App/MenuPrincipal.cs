@@ -23,7 +23,7 @@ namespace CentralTelefonica.App
         {
             var opcion = 100;
             do
-            {
+            { 
                 try
                 {                    
                     Console.WriteLine("1. registrar llamada Local");
