@@ -23,15 +23,16 @@ namespace CentralTelefonica.App
         {
             var opcion = 100;
             do
-            { 
+            {
                 try
-                {                    
+                {
                     Console.WriteLine("1. registrar llamada Local");
                     Console.WriteLine("2. registrar llamada departamental");
                     Console.WriteLine("3. Costo total de las llamadas Locales");
                     Console.WriteLine("4. Costo total de las llamadas departamental");
                     Console.WriteLine("5. Costo total de las llamadas");
                     Console.WriteLine("6 Mostrar detalle");
+                    Console.WriteLine("7 Mostrar tipo franja");
                     Console.WriteLine("0 Salir");
                     Console.WriteLine("Ingrese su opcion");
                     string valor = Console.ReadLine();
@@ -59,6 +60,11 @@ namespace CentralTelefonica.App
                     else if (opcion == 6)
                     {
                         MostrarDetalle();
+                    }
+                    else if (opcion == 7)
+                    {
+                        calcularFranja(DateTime.Now);
+
                     }
                 }
                 catch (Exception)
@@ -185,52 +191,81 @@ namespace CentralTelefonica.App
             double tiempoLlamadaFranjaUno = 0;
             double tiempoLlamadaFranjaDos = 0;
             double tiempoLlamadaFranjaTres = 0;
-            double costoTotalFranjaUno =  0.0;
-            double costoTotalFranjaDos =  0.0;
-            double costoTotalFranjaDTres =  0.0;
+            double costoTotalFranjaUno = 0.0;
+            double costoTotalFranjaDos = 0.0;
+            double costoTotalFranjaDTres = 0.0;
             foreach (var elemento in ListaLlamadas)
             {
                 if (elemento.GetType() == typeof(LlamadaDepartamental))
                 {
-                    switch(((LlamadaDepartamental)elemento).Franja)
+                    switch (((LlamadaDepartamental)elemento).Franja)
                     {
                         case 0:
-                        tiempoLlamadaFranjaUno += elemento.Duracion;
-                        costoTotalFranjaUno += elemento.CalcularPrecio();
-                        break;
+                            tiempoLlamadaFranjaUno += elemento.Duracion;
+                            costoTotalFranjaUno += elemento.CalcularPrecio();
+                            break;
                         case 1:
-                        tiempoLlamadaFranjaDos += elemento.Duracion;
-                        costoTotalFranjaDos += elemento.CalcularPrecio();
-                        break;
+                            tiempoLlamadaFranjaDos += elemento.Duracion;
+                            costoTotalFranjaDos += elemento.CalcularPrecio();
+                            break;
                         case 2:
-                        tiempoLlamadaFranjaTres += elemento.Duracion;
-                        costoTotalFranjaDTres += elemento.CalcularPrecio();
-                        break;
+                            tiempoLlamadaFranjaTres += elemento.Duracion;
+                            costoTotalFranjaDTres += elemento.CalcularPrecio();
+                            break;
                     }
-                    
-                }                
+
+                }
             }
             WriteLine("Franja 1.");
             WriteLine($"Costo minuto: {precioUnoDepartamental}");
             WriteLine($"Costo minimo: {costoTotalFranjaUno}");
-            
+
             WriteLine("Franja 2.");
             WriteLine($"Costo minuto: {precioDosDepartamental}");
             WriteLine($"Costo minimo: {costoTotalFranjaDos}");
-            
+
             WriteLine("Franja 3.");
             WriteLine($"Costo minuto: {precioTresDepartamental}");
             WriteLine($"Costo minimo: {costoTotalFranjaDTres}");
-            
+
         }
 
         public int calcularFranja(DateTime fecha)
         {
             int resultado = -1;
+            fecha = DateTime.Now;
 
-            return resultado; // 0, 1, 2 (franja)
+            int numeroDia = (int)fecha.DayOfWeek;
+            int hora = fecha.Hour;
+            int minutos = fecha.Minute;
+
+            if (numeroDia >= 1 && numeroDia <= 5)
+            {
+                if (hora >= 6 && hora < 22)
+                {
+                    resultado = 0;
+                    WriteLine(resultado);
+                }
+                else if (hora >= 22 && hora < 6)
+                {
+                    resultado = 1;
+                    WriteLine(resultado);
+                }
+            }
+            else if (numeroDia > 5 && numeroDia <= 7)
+            {
+                if (hora >= 22 && hora < 6)
+                {
+                    resultado = 2;
+                    WriteLine(resultado);
+                }
+            }
+            return resultado;
+
         }
+
 
     }
 
 }
+
