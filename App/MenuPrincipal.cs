@@ -254,7 +254,7 @@ namespace CentralTelefonica.App
             }
             else if (numeroDia > 5 && numeroDia <= 7)
             {
-                if (hora >= 22 && hora < 6)
+                if (hora > 6 || hora <= 22)
                 {
                     resultado = 2;
                     WriteLine(resultado);
@@ -263,7 +263,6 @@ namespace CentralTelefonica.App
             return resultado;
 
         }
-
 
     }
 
